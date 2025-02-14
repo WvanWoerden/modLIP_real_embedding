@@ -1,0 +1,13 @@
+axes.titlesize : 20
+axes.labelsize : 18
+axes.titlepad: 20
+lines.linewidth : 2
+lines.markersize : 10
+xtick.labelsize : 14
+ytick.labelsize : 14
+mathtext.fontset: stixsans
+mathtext.default: regular 
+font.family: stixsans
+font.size: 16
+text.usetex: True
+text.latex.preamble: \usepackage{amsfonts}\usepackage{amsmath}
