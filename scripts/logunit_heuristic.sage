@@ -1,7 +1,20 @@
-# sage scripts to generate data for Figure 5.
-# run as: sage logunit_heuristic.sage p
-# where p is a prime between 2 and 37 (for which the unit group has been precomputed)
-# creates ../data/logunit_heuristic_p.npy file with results
+# This SageMath script generates data for Figure 5, which verifies
+# the accuracy of the Gaussian Heuristic in the scaled log-unit lattice.
+#
+# How to run:
+# sage logunit_heuristic.sage p
+#   p: prime degree
+#   Ensure precomputed unit group data is available at data/units_[p].
+#
+# Example:
+# sage logunit_heuristic.sage 23
+#
+# Output format:
+# The output file (data/logunit_heuristic_[p].npy) starts with a line
+# -1 gh, where gh is the Gaussian Heuristic of the log-unit lattice, followed by 50 lines with
+# the format: s lambda1
+#   s: scaling factor (first coefficient is scaled by 2^(s*(p-1)))
+#   lambda1: normalized minimum of the scaled log-unit lattice
 
 import numpy as np
 from math import lgamma

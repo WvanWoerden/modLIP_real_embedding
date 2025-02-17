@@ -11,12 +11,12 @@ It contains the following parts:
 
 # Dependencies
 
-Dependencies required including the version on which the scripts have been tested.
+Dependencies required, including the version on which the scripts have been tested.
 
-- Pari/GP
-- SageMath (10.4)
-- Numpy (2.0.1)
-- Matplotlib (3.9.2)
+- Pari/GP (2.15.4)
+- SageMath (10.5)
+- Numpy (1.26.3)
+- Matplotlib (3.8.0)
 - LaTeX (e.g. pdfTex, TeXLive)
 
 Generally, it should be sufficient to have a somewhat recent version of Sagemath and a LaTeX distribution installed as SageMath includes an installation of Pari/GP.
@@ -26,18 +26,17 @@ If the `gp` binary is not available one can replace it by `sage --gp`.
 
 To generate the plots in the paper go to the `plots/` folder and run
 ```
-sh make_plots.sh
+bash make_plots.sh
 ```
 This generates the pdf files `plots/reconstruction_qx.pdf`, `plots/idealrecovery.pdf`, `plots/logunit_heuristic.pdf` and `GS_heuristic.pdf` corresponding to Figures 3,4,5 and 6 in the paper respectively. 
 
 # Data generation
 
-In all below experiments that parameter p stands for the degree of the (NTRUprime) field that is considered.
+In all experiments below, the parameter p stands for the degree of the (NTRUprime) field that is considered.
 All data generation scripts are located in the folder `scripts/`.
-The output format for the generated data is described in the relevant `plots/plot_*` files.
 When running SageMath experiments on multiple cores one sometimes has to set the environment variable `SAGE_NUM_THREADS` to the appropriate number of cores.
 
-## Figure 3
+## Figure 3 (required precision for recovery of $B^tB$ from its real embedding)
 
 The data for Figure 3 of the paper can be generated using the script `reconstruction_qx.sage`. One can run the script with the parameters `i b p_start p_end nbtrials nbcores` to compute the reconstruction of `q_i` with BKZ blocksize `b` (`b=2` is LLL) for all `p` in `primes(p_start,p_end)`.
 For each `p` the reconstruction is done on `nbtrials` times and the program runs on `nbcores` cores.
@@ -45,16 +44,23 @@ For example run
 ```
 SAGE_NUM_THREADS=4 sage reconstruction_qx.sage 1 2 37 38 8 4
 ```
-recovers the first element q1 using LLL for p=37 over 8 different trials on 4 cores. 
+recovers the first element $q_1$ using LLL for p=37 over 8 different trials on 4 cores. 
 The output is stored in the file `data/reconstruct_q[i]_[p]_[nbtrials]_[b]`.
 
 Note that for larger primes `p` these experiments can take quite long.
 
-## Figure 4
+### Data format
+The output file contains `nbtrials` lines of the form:
+```
+p b sigma nrm
+```
+where `p` is the degree of the field, `b` is the highest required bitsize of the embedding, `sigma` is the real embedding (at low precision) and `nrm` is the norm of the element to be recovered.
+
+## Figure 4 (timed recovery of ideal $zO_{L_1}$ from $B^tB$)
 
 The data for Figure 4 of the paper can be generated using the Pari/GP script `pari_idealrecovery_intersect.gp`. 
 There is a helper script `run_idealrecovery.sh` that helps with passing the right variables to the GP and to run the different trials and keep track of their runtime. 
-One can pass the parameters `p t` to `run_idealrecovery.sh`, where t indicates the number of trials.
+One can pass the parameters `p nbtrials` to `run_idealrecovery.sh`, where `nbtrials` indicates the number of trials.
 For example run
 ```
 bash run_idealrecovery.sh 43 16
@@ -62,11 +68,18 @@ bash run_idealrecovery.sh 43 16
 to recover the ideal for p=43 over 16 different trials.
 The output is appended to the file `data/idealrecovery_[p]`.
 
-## Figure 5
+### Data format
+The output file contains `nbtrials` lines of the form:
+```
+p a b c time
+```
+where `p` is the prime degree, `a` and `b` should both be `1` and indicate that the equation $z_1 (\det(B)i + q_2) = q_1 z_2$ from Lemma 5 is true, `c` should be `1` indicating that the ideal $z_1 O_{L_1}$ is correctly recovered, and `time` indicates the total runtime for the ideal recovery.
+
+## Figure 5 (verification of Gaussian Heuristic being accurate in scaled log-unit lattice)
 
 The data for Figure 5 of the paper can be generated using the SageMath script `logunit_heuristic.sage`.
-One can pass the parameter p to the script. 
-The script assumes that the unit group for the NTRUPrime field of prime p has been precomputed and is available at `data/units_[p]`.
+One can pass the parameter `p` to the script. 
+The script assumes that the unit group for the NTRUPrime field of degree `p` has been precomputed and is available at `data/units_[p]`.
 We provide precomputed data for all primes up to 37.
 For example run
 ```
@@ -75,7 +88,15 @@ sage logunit_heuristic.sage 23
 to verify the heuristic for p=23. By default the script runs 50 trials.
 The output is stored in the file `data/logunit_heuristic_[p].npy`. 
 
-## Figure 6
+### Data format
+The output file starts with a first line `-1 gh`, where gh is the Gaussian Heuristic of the logunit lattice.
+This is followed by 50 lines of the form 
+```
+s lambda1
+``` 
+where `s` is a scalar and `lambda1` is the normalized minimum of the logunit lattice where the first coefficient is scaled by $2^{s(p-1)}$. The normalization factor is $2^s$ to account for the normalized growth of the determinant.
+
+## Figure 6 (verification of Heuristic 2 about GS-friendly fields)
 
 The data for Figure 6 of the paper can be generated using the SageMath script `GS_prime_selection.sage`.
 There are no parameters to pass to the script.
@@ -84,6 +105,13 @@ Run
 SAGE_NUM_THREADS=4 sage GS_prime_selection.sage
 ```
 The output is stored in the files `data/GS_heuristic_*.npy`.
+
+### Data format
+Each output file contains lines of the form
+```
+n r1 r2
+```
+where `d` is the degree of the field, `r1` is the gcd obtained over 100 random primes and `r2` is the gcd obtained over 2 random primes (best of 20 trials).
 
 # Organization of files
 

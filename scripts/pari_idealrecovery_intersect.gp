@@ -1,6 +1,21 @@
-// pari/gp script to generate data for Figure 4.
-// run by: sh run_idealrecover.sh p t
-// where p is a prime and t is the number of trials
+//  This Pari/GP script generates data for Figure 4, which focuses on
+//  the timed recovery of the ideal zO_{L_1} from the matrix B^tB.
+//
+//  How to run:
+//  Use the helper script: bash run_idealrecovery.sh p nbtrials
+//    p: prime degree
+//    nbtrials: number of trials
+//
+//  Example:
+//  bash run_idealrecovery.sh 43 16
+//
+//  Output format:
+//  The output file (data/idealrecovery_[p]) contains nbtrials lines,
+//  each with the format: p a b c time
+//    p: prime degree
+//    a, b: indicators (should be 1) for the equation from Lemma 5
+//    c: indicator (should be 1) for successful ideal recovery
+//    time: total runtime for ideal recovery
 
 default(parisize,"4G");
 default(parisizemax, "16G");

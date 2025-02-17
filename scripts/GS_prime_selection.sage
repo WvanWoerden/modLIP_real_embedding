@@ -1,6 +1,16 @@
-# sage script to generate data for Figure 6.
-# change number of cores below and run as:
+# This SageMath script generates data for Figure 6, 
+# which verifies Heuristic 2 about GS-friendly fields.
+#
+# How to run:
 # SAGE_NUM_THREADS=4 sage GS_prime_selection.sage
+#
+# Output format:
+# The output files (data/GS_heuristic_*.npy) contain lines with the
+# format: d r1 r2
+#   d: degree of the field
+#   r1: gcd obtained over 100 random primes
+#   r2: gcd obtained over 2 random primes (best of 20 trials)
+
 nb_cores = 4
 
 ## The objective is to see if is it possible to compute two primes for the Gentry-Szydlo algorithm such that their gcd (or more properly the gcd of the maximal order of (OK/pOK)^*) is sufficiently small

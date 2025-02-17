@@ -1,21 +1,31 @@
-# sage script to generate data for Figure 3.
-# run program as:
-# sage reconstruction_qx.sage i b p_start p_end nbtrials nbcores
-# to compute reconstruction of q_i with BKZ blocksize b (b=2 is LLL) 
-# for p in primes(p_start, p_end)
-# nbtrials indicates the number of trials per parameter set and 
-# nbcores the number of CPU cores.
-# example: sage reconstruction_qx.sage 1 2 37 38 8 1
-# stores results in ../data/reconstruct_qi_p_nbtrials_b
+# This SageMath script generates data for Figure 3 in the paper, which analyzes
+# the required precision for recovering the polynomial q_x from its real embedding.
+#
+# How to run:
+# sage reconstruction_qx.sage x b p_start p_end nbtrials nbcores
+#   x: index of q_x
+#   b: BKZ blocksize
+#   p_start, p_end: prime degree range
+#   nbtrials: number of trials
+#   nbcores: number of cores
+#
+# Example:
+# SAGE_NUM_THREADS=4 sage reconstruction_qx.sage 1 2 37 38 8 4
+#
+# Output format:
+# The output file (data/reconstruct_q[x]_[p]_[nbtrials]_[b]) contains
+# nbtrials lines, each with the format: p b sigma nrm
+#   p: prime degree
+#   b: highest required bitsize of the embedding
+#   sigma: real embedding (low precision)
+#   nrm: norm of the element to be recovered
 
 import multiprocessing
 import numpy as np
 import sys
 
-# change number of cores and number of trials per case here
 nb_cores=4
 nb_trials=8
-
 qx=1
 BKZ_blocksize = 2
 primes_start = 200
