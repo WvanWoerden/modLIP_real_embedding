@@ -4,6 +4,8 @@ This is the artifact belonging to the paper:
 
 > Bill Allombert, Alice Pellet--Mary and Wessel van Woerden, Cryptanalysis of rank-2 module-LIP: a single real embedding is all it takes, Eurocrypt 2025.
 
+Which is publicly available at [eprint](https://eprint.iacr.org/2025/280).
+
 It contains the following parts:
 
 1. The data, plots and utilities to generate the plots in the paper in `data/`, `plots/` and `plots/plot_*` respectively.
