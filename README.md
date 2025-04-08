@@ -41,12 +41,13 @@ When running SageMath experiments on multiple cores one sometimes has to set the
 ## Figure 3 (required precision for recovery of $B^tB$ from its real embedding)
 
 The data for Figure 3 of the paper can be generated using the script `reconstruction_qx.sage`. One can run the script with the parameters `i b p_start p_end nbtrials nbcores` to compute the reconstruction of `q_i` with BKZ blocksize `b` (`b=2` is LLL) for all `p` in `primes(p_start,p_end)`.
-For each `p` the reconstruction is done on `nbtrials` times and the program runs on `nbcores` cores.
+For each `p` the reconstruction is done `nbtrials` times and the program runs on `nbcores` cores.
+These cores are only used to run multiple trials in parallel so at most `nbtrials` cores will be used.
 For example run
 ```
 SAGE_NUM_THREADS=4 sage reconstruction_qx.sage 1 2 37 38 8 4
 ```
-recovers the first element $q_1$ using LLL for p=37 over 8 different trials on 4 cores. 
+to recover the first element $q_1$ using LLL for p=37 over 8 different trials on 4 cores. 
 The output is stored in the file `data/reconstruct_q[i]_[p]_[nbtrials]_[b]`.
 
 Note that for larger primes `p` these experiments can take quite long.
@@ -101,19 +102,24 @@ where `s` is a scalar and `lambda1` is the normalized minimum of the logunit lat
 ## Figure 6 (verification of Heuristic 2 about GS-friendly fields)
 
 The data for Figure 6 of the paper can be generated using the SageMath script `GS_prime_selection.sage`.
-There are no parameters to pass to the script.
-Run
+One can run the script with the parameters `d nbcores`, where `d` is the maximal degree of the tested number fields and `nb_cores` is the number of cores used to run multiple trials in parallel.
+For example run
 ```
-SAGE_NUM_THREADS=4 sage GS_prime_selection.sage
+SAGE_NUM_THREADS=4 sage GS_prime_selection.sage 100 4
 ```
 The output is stored in the files `data/GS_heuristic_*.npy`.
 
 ### Data format
 Each output file contains lines of the form
 ```
-n r1 r2
+d r1 r2
 ```
 where `d` is the degree of the field, `r1` is the gcd obtained over 100 random primes and `r2` is the gcd obtained over 2 random primes (best of 20 trials).
+
+## All data
+
+To compute all the data for the figures in the paper we created bash files `gen_data_figureX.sh` for each figure `X=3,4,5,6`.
+Note that while the data for Figures 5 and 6 can be computed in about 10 minutes or 1 hour respectively, the computational resources needed for all the data in Figures 3 and 4 is much larger. These scripts are therefore merely an example to indicate all the parameters we have used and should in practice be executed in parallel over many more cores. 
 
 # Organization of files
 
@@ -138,6 +144,10 @@ where `d` is the degree of the field, `r1` is the gcd obtained over 100 random p
 │   ├── plot_GS_heuristic.sage       # make Figure 6
 ├── LICENSE
 ├── README.md
+├── gen_data_figure3.sh
+├── gen_data_figure4.sh
+├── gen_data_figure5.sh
+├── gen_data_figure6.sh
 └── scripts
     ├── reconstruction_qx.sage            # generates data Figure 3
     ├── pari_idealrecovery_intersect.gp   # generates data Figure 4

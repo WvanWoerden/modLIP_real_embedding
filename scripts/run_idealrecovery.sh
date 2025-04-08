@@ -8,9 +8,10 @@ fi
 
 p=$1
 tt=$2
-echo $p $tt
+echo "p=$p trials=$tt"
 for (( t = 1; t <= $tt; t++ ))
 do
+	echo "Trial $t"
 	start=`date +%s.%N`
 	output=$(P=$p gp -q pari_idealrecovery_intersect.gp 2> /dev/null)
 	end=`date +%s.%N`

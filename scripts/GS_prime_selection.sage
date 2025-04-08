@@ -2,7 +2,12 @@
 # which verifies Heuristic 2 about GS-friendly fields.
 #
 # How to run:
-# SAGE_NUM_THREADS=4 sage GS_prime_selection.sage
+# SAGE_NUM_THREADS=nb_cores sage GS_prime_selection.sage d nb_cores
+#   d: maximal degree of tested number fields (defaults to 300)
+#   nb_cores: number of cores
+#
+# Example:
+# SAGE_NUM_THREADS=4 sage GS_prime_selection.sage 100 4
 #
 # Output format:
 # The output files (data/GS_heuristic_*.npy) contain lines with the
@@ -11,7 +16,14 @@
 #   r1: gcd obtained over 100 random primes
 #   r2: gcd obtained over 2 random primes (best of 20 trials)
 
+import sys
+
 nb_cores = 4
+max_degree = 300
+if len(sys.argv) >= 2:
+  max_degree = int(sys.argv[1])
+if len(sys.argv) >= 3:
+  nb_cores = int(sys.argv[2])
 
 ## The objective is to see if is it possible to compute two primes for the Gentry-Szydlo algorithm such that their gcd (or more properly the gcd of the maximal order of (OK/pOK)^*) is sufficiently small
 ## Some first experiments indicate that it could be quite small, maybe as small as 2
@@ -162,10 +174,10 @@ def create_list_random(min_degree, max_degree, step):
 set_random_seed(42)
 
 ## Creating the list of polynomials
-list_NTRUPrime = create_list_NTRUPrime(10,300,17)
-list_cyclo = create_list_cyclotomic(10,300,17)
+list_NTRUPrime = create_list_NTRUPrime(10,max_degree,17)
+list_cyclo = create_list_cyclotomic(10,max_degree,17)
 list_cyclo.sort() ## sort the polynomials by degree
-list_random = create_list_random(10,300,17)
+list_random = create_list_random(10,max_degree,17)
 print("Created three lists containing respectively ", len(list_NTRUPrime), "NTRUPrime fields,", len(list_cyclo), "cyclotomic fields, and ", len(list_random), "random fields")
 
 
@@ -198,7 +210,7 @@ for Phi in list_random:
 data_file.close()
 
 ## adding the number of roots of unity to data_cyclo_mult_primes
-for m in range(10,300,17):
+for m in range(10,max_degree,17):
   Phi = cyclotomic_polynomial(m)
   nb_roots_unity = m
   if nb_roots_unity%2 == 1:
