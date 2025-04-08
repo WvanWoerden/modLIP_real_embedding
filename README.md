@@ -17,11 +17,11 @@ Dependencies required, including the version on which the scripts have been test
 
 - SageMath (10.5)
 - Pari/GP (2.15.4)
-- Numpy (1.26.3)
+- NumPy (1.26.3)
 - Matplotlib (3.8.0)
 
-Generally, it should be sufficient to have a somewhat recent version of Sagemath installed as SageMath includes an installation of Pari/GP.
-If the `gp` binary is not available one can replace it by `sage --gp`. 
+Generally, it should be sufficient to have a somewhat recent version of SageMath installed as SageMath includes an installation of Pari/GP.
+If the `gp` binary is not available, one can replace it by `sage --gp`. 
 We included a Dockerfile based on the image `sagemath/sagemath:10.5` which sets up a suitable environment to run the experiments in.
 
 # Plots
@@ -30,14 +30,15 @@ To generate the plots in the paper go to the `plots/` folder and run
 ```
 bash make_plots.sh
 ```
-This generates the pdf files `plots/reconstruction_qx.pdf`, `plots/idealrecovery.pdf`, `plots/logunit_heuristic.pdf` and `GS_heuristic.pdf` corresponding to Figures 3,4,5 and 6 in the paper respectively. 
+This generates the pdf files `plots/reconstruction_qx.pdf`, `plots/idealrecovery.pdf`, `plots/logunit_heuristic.pdf` and `plots/GS_heuristic.pdf` corresponding to Figures 3,4,5 and 6 in the paper respectively. 
 
 # Data generation
 
-In all experiments below, the parameter p stands for the degree of the (NTRUprime) field that is considered.
+In all experiments below, the parameter `p` stands for the degree of the (NTRUprime) field that is considered.
 All data generation scripts are located in the folder `scripts/`.
 When running SageMath experiments on multiple cores one sometimes has to set the environment variable `SAGE_NUM_THREADS` to the appropriate number of cores.
-We now explain all the scripts and how to run them with small example parameter, for computing all the data of the paper see the section "All data" further below.
+We now explain all the scripts and how to run them with small example parameters. 
+For computing all the data of the paper see the section "All data" further below.
 
 ## Figure 3 (required precision for recovery of $B^tB$ from its real embedding)
 
@@ -48,7 +49,7 @@ For example run
 ```
 SAGE_NUM_THREADS=4 sage reconstruction_qx.sage 1 2 37 38 8 4
 ```
-to recover the first element $q_1$ using LLL for p=37 over 8 different trials on 4 cores. 
+to recover the first element $q_1$ using LLL for `p=37` over 8 different trials on 4 cores. 
 The output is stored in the file `data/reconstruct_q[i]_[p]_[nbtrials]_[b]`.
 
 Note that for larger primes `p` these experiments can take quite long.
@@ -69,7 +70,7 @@ For example run
 ```
 bash run_idealrecovery.sh 43 16
 ``` 
-to recover the ideal for p=43 over 16 different trials.
+to recover the ideal for `p=43` over 16 different trials.
 The output is appended to the file `data/idealrecovery_[p]`.
 
 ### Data format
@@ -89,7 +90,7 @@ For example run
 ```
 sage logunit_heuristic.sage 23
 ```
-to verify the heuristic for p=23. By default the script runs 50 trials.
+to verify the heuristic for `p=23`. By default the script runs 50 trials.
 The output is stored in the file `data/logunit_heuristic_[p].npy`. 
 
 ### Data format
@@ -119,7 +120,7 @@ where `d` is the degree of the field, `r1` is the gcd obtained over 100 random p
 
 ## All data
 
-To compute all the data for the figures in the paper we created bash files `gen_data_figureX.sh` for each figure `X=3,4,5,6`.
+To compute all the data for the figures in the paper, we created bash files `gen_data_figureX.sh` for each figure `X=3,4,5,6`.
 Note that while the data for Figures 5 and 6 can be computed in about 10 minutes or 1 hour respectively, the computational resources needed for all the data in Figures 3 and 4 is much larger. These scripts are therefore merely an example to indicate all the parameters we have used and should in practice be executed in parallel over many more cores. 
 
 # Organization of files
