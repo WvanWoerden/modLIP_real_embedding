@@ -15,14 +15,14 @@ It contains the following parts:
 
 Dependencies required, including the version on which the scripts have been tested.
 
-- Pari/GP (2.15.4)
 - SageMath (10.5)
+- Pari/GP (2.15.4)
 - Numpy (1.26.3)
 - Matplotlib (3.8.0)
-- LaTeX (e.g. pdfTex, TeXLive)
 
-Generally, it should be sufficient to have a somewhat recent version of Sagemath and a LaTeX distribution installed as SageMath includes an installation of Pari/GP.
+Generally, it should be sufficient to have a somewhat recent version of Sagemath installed as SageMath includes an installation of Pari/GP.
 If the `gp` binary is not available one can replace it by `sage --gp`. 
+We included a Dockerfile based on the image `sagemath/sagemath:10.5` which sets up a suitable environment to run the experiments in.
 
 # Plots
 
