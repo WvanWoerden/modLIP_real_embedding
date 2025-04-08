@@ -41,7 +41,7 @@ plt.plot(data_random[:,0], data_random[:,1], alpha=float(0.3), color="blue", lin
 plt.plot(data_random[:,0], data_random[:,2], alpha=float(1), color="blue", linestyle="dashed", marker="*", label="Random (best of 50x2 primes)")
 
 plt.xlabel("Degree $n$")
-plt.ylabel(r'gcd of $o_{max}((\mathcal O_K/p{\mathcal O_K})^{\times})$')
+plt.ylabel(r'gcd of $o_{max}((\mathcal{O}_K/p{\mathcal{O}_K})^{\times})$')
 
 plt.legend()
 fig.tight_layout()

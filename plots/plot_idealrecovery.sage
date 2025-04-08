@@ -8,7 +8,7 @@
 # idealrecovery.pdf
 #
 # Data dependency:
-# data/logunit_heuristic_[p].npy for p=13,19,23,29,37
+# data/idealrecovery_[p] for p in primes(31,200)
 #
 # Data format:
 # The input file (data/idealrecovery_[p]) contains nbtrials lines,

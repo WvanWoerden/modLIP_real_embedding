@@ -5,9 +5,6 @@ lines.linewidth : 2
 lines.markersize : 10
 xtick.labelsize : 14
 ytick.labelsize : 14
-mathtext.fontset: stixsans
-mathtext.default: regular 
-font.family: stixsans
+mathtext.default: regular
 font.size: 16
-text.usetex: True
-text.latex.preamble: \usepackage{amsfonts}\usepackage{amsmath}
+text.usetex: False
