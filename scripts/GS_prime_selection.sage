@@ -216,35 +216,6 @@ for m in range(10,max_degree,17):
   if nb_roots_unity%2 == 1:
     nb_roots_unity *= 2 ## for odd conductors, we need to multiply by 2 the number of roots because of -1
   data_cyclo_mult_primes[Phi] += [nb_roots_unity]
-  
-## Saving the results in latex format and in plots
-output_file = open("../data/experiments_for_GS_heuristic.tex", "w")
-#headers
-output_file.write("\\documentclass[12pt]{article} \n\\usepackage[utf8]{inputenc} \n\\usepackage{makecell}")
-output_file.write("\n\\newcommand{\\OK}{\\mathcal{O}_K} \n\\newcommand{\\omax}{o_{\\mathrm{max}}}\n\n\\begin{document}")
-
-#tabular for NTRUPrime fields
-output_file.write("\n\\begin{figure} \n \\begin{tabular}{|c|c|c|}")
-output_file.write("\n\\hline\n\\thead{degree of \\\\the field} & \\thead{gcd of $\\omax((\\OK/p\\OK)^\\times)$ \\\\over 100 random primes} & \\thead{gcd of $\\omax((\\OK/p\\OK)^\\times)$ \\\\ over 2 random primes \\\\(best among 20 trials)}\\\\ \n\\hline\n")
-for Phi in list_NTRUPrime:
-  output_file.write("%s & %s & %s \\\\ \n\\hline\n"%(data_NTRUPrime_mult_primes[Phi][0], data_NTRUPrime_mult_primes[Phi][1], data_NTRUPrime_two_primes[Phi][1]))
-output_file.write("\n\\end{tabular} \n \\caption{NTRUPrime fields} \n \\end{figure}")
-
-#tabular for cyclotomic fields
-output_file.write("\n\n\\begin{figure} \n \\begin{tabular}{|c|c|c|c|}")
-output_file.write("\n\\hline\n \\thead{degree of \\\\the field} & \\thead{number of roots \\\\ of unity in $K$} & \\thead{gcd of $\\omax((\\OK/p\\OK)^\\times)$ \\\\over 100 random primes} & \\thead{gcd of $\\omax((\\OK/p\\OK)^\\times)$ \\\\ over 2 random primes \\\\(best among 20 trials)}\\\\ \n\\hline\n")
-for Phi in list_cyclo:
-  output_file.write("%s & %s & %s &%s \\\\ \n\\hline\n"%(data_cyclo_mult_primes[Phi][0], data_cyclo_mult_primes[Phi][2], data_cyclo_mult_primes[Phi][1], data_cyclo_two_primes[Phi][1]))
-output_file.write("\\end{tabular} \n \\caption{Cyclotomic fields} \n \\end{figure}")
-
-#tabular for random fields
-output_file.write("\n\n\\begin{figure} \n \\begin{tabular}{|c|c|c|}")
-output_file.write("\n\\hline\n \\thead{degree of \\\\the field} & \\thead{gcd of $\\omax((\\OK/p\\OK)^\\times)$ \\\\over 100 random primes} & \\thead{gcd of $\\omax((\\OK/p\\OK)^\\times)$ \\\\ over 2 random primes \\\\(best among 20 trials)}\\\\ \n\\hline\n")
-for Phi in list_random:
-  output_file.write("%s & %s & %s \\\\ \n\\hline\n"%(data_random_mult_primes[Phi][0], data_random_mult_primes[Phi][1], data_random_two_primes[Phi][1]))
-output_file.write("\\end{tabular} \n\\caption{random fields} \n\\end{figure}")
-output_file.write("\n\\end{document}")
-output_file.close()
 
 ############################################################
 ######## Sanity check, not needed for experiments ##########

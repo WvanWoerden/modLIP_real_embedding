@@ -37,6 +37,7 @@ This generates the pdf files `plots/reconstruction_qx.pdf`, `plots/idealrecovery
 In all experiments below, the parameter p stands for the degree of the (NTRUprime) field that is considered.
 All data generation scripts are located in the folder `scripts/`.
 When running SageMath experiments on multiple cores one sometimes has to set the environment variable `SAGE_NUM_THREADS` to the appropriate number of cores.
+We now explain all the scripts and how to run them with small example parameter, for computing all the data of the paper see the section "All data" further below.
 
 ## Figure 3 (required precision for recovery of $B^tB$ from its real embedding)
 
@@ -105,7 +106,7 @@ The data for Figure 6 of the paper can be generated using the SageMath script `G
 One can run the script with the parameters `d nbcores`, where `d` is the maximal degree of the tested number fields and `nb_cores` is the number of cores used to run multiple trials in parallel.
 For example run
 ```
-SAGE_NUM_THREADS=4 sage GS_prime_selection.sage 100 4
+SAGE_NUM_THREADS=4 sage GS_prime_selection.sage 60 4
 ```
 The output is stored in the files `data/GS_heuristic_*.npy`.
 
@@ -144,6 +145,7 @@ Note that while the data for Figures 5 and 6 can be computed in about 10 minutes
 │   ├── plot_GS_heuristic.sage       # make Figure 6
 ├── LICENSE
 ├── README.md
+├── Dockerfile
 ├── gen_data_figure3.sh
 ├── gen_data_figure4.sh
 ├── gen_data_figure5.sh
