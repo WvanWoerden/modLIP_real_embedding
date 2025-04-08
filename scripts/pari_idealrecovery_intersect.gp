@@ -1,27 +1,27 @@
-//  This Pari/GP script generates data for Figure 4, which focuses on
-//  the timed recovery of the ideal zO_{L_1} from the matrix B^tB.
-//
-//  How to run:
-//  Use the helper script: bash run_idealrecovery.sh p nbtrials
-//    p: prime degree
-//    nbtrials: number of trials
-//
-//  Example:
-//  bash run_idealrecovery.sh 43 16
-//
-//  Output format:
-//  The output file (data/idealrecovery_[p]) contains nbtrials lines,
-//  each with the format: p a b c time
-//    p: prime degree
-//    a, b: indicators (should be 1) for the equation from Lemma 5
-//    c: indicator (should be 1) for successful ideal recovery
-//    time: total runtime for ideal recovery
+\\  This Pari/GP script generates data for Figure 4, which focuses on
+\\  the timed recovery of the ideal zO_{L_1} from the matrix B^tB.
+\\
+\\  How to run:
+\\  Use the helper script: bash run_idealrecovery.sh p nbtrials
+\\    p: prime degree
+\\    nbtrials: number of trials
+\\
+\\  Example:
+\\  bash run_idealrecovery.sh 43 16
+\\
+\\  Output format:
+\\  The output file (data/idealrecovery_[p]) contains nbtrials lines,
+\\  each with the format: p a b c time
+\\    p: prime degree
+\\    a, b: indicators (should be 1) for the equation from Lemma 5
+\\    c: indicator (should be 1) for successful ideal recovery
+\\    time: total runtime for ideal recovery
 
 default(parisize,"4G");
 default(parisizemax, "16G");
-setrand(extern("date +%s"))
+setrand(extern("date +%s"));
 
-p = eval(getenv("P")) \\ assume p%4=3 so far
+p = eval(getenv("P")); \\ assume p%4=3 so far
 
 PK = x^p-x-1;
 PL = if(p%4==1, x^(2*p)-2*x^(p+1)+x^2+1 ,x^(2*p)+2*x^(p+1)+x^2+1);
